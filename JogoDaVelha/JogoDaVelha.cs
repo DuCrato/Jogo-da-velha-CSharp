@@ -17,19 +17,19 @@ namespace JogoDaVelha
             cont       = 0;
         }
 
-        public void startGame()
+        public void StartGame()
         {
             while(!endGame)
             {
-                renderTable();
-                readUserChoice();
-                renderTable();
-                checkEndGame();
-                changePlayer();
+                RenderTable();
+                ReadUserChoice();
+                RenderTable();
+                CheckEndGame();
+                ChangePlayer();
             }
         }
 
-        private void changePlayer()
+        private void ChangePlayer()
         {
             if (timePlayer == 'X')
                 timePlayer =  'O';
@@ -37,12 +37,12 @@ namespace JogoDaVelha
                 timePlayer =  'X';
         }
 
-        private void checkEndGame()
+        private void CheckEndGame()
         {
             if (cont < 5)
                 return;
 
-            if (winDiagonal() || winLine() || winColumn())
+            if (WinDiagonal() || WinLine() || WinColumn())
             {
                 endGame = true;
                 Console.WriteLine($"Fim de jogo!!! Vitória de {timePlayer}");
@@ -56,7 +56,7 @@ namespace JogoDaVelha
             }
         }
 
-        private bool winLine()
+        private bool WinLine()
         {
             bool winLine1 = position[0] == position[1] && position[0] == position[2];
             bool winLine2 = position[3] == position[4] && position[3] == position[6];
@@ -65,7 +65,7 @@ namespace JogoDaVelha
             return winLine1 || winLine2 || winLine3;
         }
 
-        private bool winColumn()
+        private bool WinColumn()
         {
             bool winColumn1 = position[0] == position[3] && position[0] == position[6];
             bool winColumn2 = position[1] == position[4] && position[1] == position[7];
@@ -74,7 +74,7 @@ namespace JogoDaVelha
             return winColumn1 || winColumn2 || winColumn3;
         }
 
-        private bool winDiagonal()
+        private bool WinDiagonal()
         {
             bool winDiogonal1 = position[2] == position[4] && position[2] == position[6];
             bool winDiogonal2 = position[0] == position[4] && position[0] == position[8];
@@ -82,22 +82,22 @@ namespace JogoDaVelha
             return winDiogonal1 || winDiogonal2;
         }
 
-        private void readUserChoice()
+        private void ReadUserChoice()
         {
             Console.WriteLine($"Agaora é a vez de {timePlayer}, digite uma posição entre 1 e 9");
 
-            bool converson = int.TryParse(Console.ReadLine(), out int chosenPosition);
+            bool conversion = int.TryParse(Console.ReadLine(), out int chosenPosition);
 
-            while (!converson || !validateChoice(chosenPosition))
+            while (!conversion || !ValidateChoice(chosenPosition))
             {
                 Console.WriteLine("Por favor digite um número entre 1 e 9 que esteja disponível na tabela!!");
-                converson = int.TryParse(Console.ReadLine(), out chosenPosition);
+                conversion = int.TryParse(Console.ReadLine(), out chosenPosition);
             }
 
-            setChoice(chosenPosition);
+            SetChoice(chosenPosition);
         }
 
-        private void setChoice(int positionChoice)
+        private void SetChoice(int positionChoice)
         {
             int index = positionChoice - 1;
 
@@ -105,20 +105,20 @@ namespace JogoDaVelha
             cont++;
         }
 
-        private bool validateChoice(int positionChoice)
+        private bool ValidateChoice(int positionChoice)
         {
             var index = positionChoice - 1;
 
             return position[index] != 'O' && position[index] != 'X';
         }
 
-        private void renderTable()
+        private void RenderTable()
         {
             Console.Clear();
-            Console.WriteLine(getTable());
+            Console.WriteLine(GetTable());
         }
 
-        private string getTable()
+        private string GetTable()
         {
             return $"\n\n\t {position[0]} | {position[1]} | {position[2]}\n" +
                    $"\t {position[3]} | {position[4]} | {position[5]}\n"    +
